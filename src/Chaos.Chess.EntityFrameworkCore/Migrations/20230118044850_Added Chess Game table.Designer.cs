@@ -3,6 +3,7 @@ using System;
 using Chaos.Chess.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,10 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Chaos.Chess.Migrations
 {
     [DbContext(typeof(ChessDbContext))]
-    partial class ChessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230118044850_Added Chess Game table")]
+    partial class AddedChessGametable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,21 +74,18 @@ namespace Chaos.Chess.Migrations
                     b.Property<string>("Reason")
                         .HasColumnType("text");
 
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Turn")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
+                    b.Property<int>("Turn")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Winner")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
+                    b.Property<int>("Winner")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("GameStatus", (string)null);
+                    b.ToTable("GameStatus");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

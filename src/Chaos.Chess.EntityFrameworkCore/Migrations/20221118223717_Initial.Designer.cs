@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Chaos.Chess.Migrations
 {
     [DbContext(typeof(ChessDbContext))]
-    [Migration("20221118215207_Initial")]
+    [Migration("20221118223717_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

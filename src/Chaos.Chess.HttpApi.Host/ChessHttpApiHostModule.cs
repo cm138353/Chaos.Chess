@@ -186,10 +186,8 @@ public class ChessHttpApiHostModule : AbpModule
                {
                 builder
                     .WithOrigins(
-                        configuration["App:CorsOrigins"]
-                            .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                            .Select(o => o.RemovePostFix("/"))
-                            .ToArray()
+                        "http://localhost:8080",
+                        "http://localhost:9000"
                     )
                     .WithAbpExposedHeaders()
                     .SetIsOriginAllowedToAllowWildcardSubdomains()

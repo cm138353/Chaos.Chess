@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Chaos.Chess.Games;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -52,6 +54,10 @@ public class ChessDbContext :
 
     #endregion
 
+    // Aggregate Root
+    public DbSet<ChessGame> Games { get; set; }
+
+
     public ChessDbContext(DbContextOptions<ChessDbContext> options)
         : base(options)
     {
@@ -75,11 +81,22 @@ public class ChessDbContext :
 
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(ChessConsts.DbTablePrefix + "YourEntities", ChessConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<ChessGame>(e =>
+        {
+            e.ToTable("ChessGames");
+
+            e.ConfigureByConvention();
+            
+        });
+
+        builder.Entity<GameStatus>(e =>
+        {
+            e.ToTable("GameStatus");
+
+            e.ConfigureByConvention();
+            e.Property(x => x.Turn).HasColumnType("varchar(50)");
+            e.Property(x => x.Winner).HasColumnType("varchar(50)");
+            e.Property(x => x.State).HasColumnType("varchar(50)");
+        });
     }
 }
